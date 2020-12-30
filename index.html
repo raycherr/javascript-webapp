@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bandlab Javascript Test</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="components/header.js" type="text/javascript" defer></script>
+  <script src="index.js" type="text/javascript" defer></script>
+
+  <script src="components/playAudio.js" type="text/javascript" defer></script>
+  <script src="components/postsList.js" type="text/javascript" defer></script>
+  <script src="services/postService.js" type="text/javascript" defer></script>
+</head>
+<body onload="onLoad()">
+  <header-component id="header" page="/posts"></header-component> <!-- Default to posts page -->
+  <main id="main">
+    <posts-list-component></posts-list-component>
+  </main>
+
+  <script src="router.js" type="text/javascript" defer></script>
+</body>
+</html>
