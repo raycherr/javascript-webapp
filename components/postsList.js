@@ -5,40 +5,43 @@ function renderTemplate() {
     <div>
       <h2>Posts</h2>
       <button id="loadPostsButton">Load posts</button>
+      <button id="sortButton">Sort alphabetically</button>
+      <button id="groupButton">Group by userID</button>
       <div id="postListContainer"></div>
-
-      <!-- TODO press button to request list of posts -->
-      <!-- TODO sort alphabetically based on title -->
-      <!-- TODO group posts by userID -->
     </div>
   `;
 }
 
-
 class PostsList extends HTMLElement {
+
+  jsonList;
+
   constructor() {
     super();
     console.log('loaded posts list');
   }
 
   connectedCallback() {
-    const shadowRoot = this.attachShadow({ mode: 'closed' });
     const currentPage = this.getAttribute('page');
     renderTemplate(currentPage);
-    shadowRoot.appendChild(postsListTemplate.content);
+    this.innerHTML = postsListTemplate.innerHTML;
 
-    const loadPostsButton = shadowRoot.querySelector('#loadPostsButton');
-    loadPostsButton.addEventListener('click', () => this.triggerLoadPost(shadowRoot));
+    const loadPostsButton = document.querySelector('#loadPostsButton');
+    loadPostsButton.addEventListener('click', () => this.triggerLoadPost());
+
+    const sortButton = document.querySelector('#sortButton');
+    sortButton.addEventListener('click', () => this.sortAlphabetically());
+
+    const groupButton = document.querySelector('#groupButton');
+    groupButton.addEventListener('click', () => this.groupByUserId());
   }
 
-  async triggerLoadPost(shadowRoot) {
-    const postList = shadowRoot.querySelector('#postListContainer');
+  async triggerLoadPost() {
+    const postList = document.querySelector('#postListContainer');
 
     try {
-      const jsonRes = await getAllPosts();
-      jsonRes.forEach(post => {
-        postList.appendChild(this.buildPostDiv(post));
-      });
+      this.jsonList = await getAllPosts();
+      this.buildPostsList();
     } catch(err) {
       const errorMessage = document.createElement('div');
       errorMessage.innerHTML = `
@@ -57,6 +60,24 @@ class PostsList extends HTMLElement {
       <p>${post.body}</p>
     `;
     return postDiv;
+  }
+
+  buildPostsList(isSort = false) {
+    document.querySelector('#postListContainer').innerHTML = '';
+    if (isSort) {
+      this.jsonList.sort((a, b) => (a.title > b.title) ? 1 : -1);
+    }
+    this.jsonList.forEach(post => {
+      document.querySelector('#postListContainer').appendChild(this.buildPostDiv(post));
+    });
+  }
+
+  sortAlphabetically() {
+    this.buildPostsList(true);
+  }
+
+  groupByUserId() {
+
   }
 }
 customElements.define('posts-list-component', PostsList);
