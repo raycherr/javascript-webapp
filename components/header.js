@@ -53,7 +53,10 @@ class Header extends HTMLElement {
   }
 
   connectedCallback() {
-    const currentPage = this.getAttribute('page');
+    let currentPage = this.getAttribute('page');
+    if (!currentPage) {
+      currentPage = '/posts';
+    }
     renderHeaderTemplate(currentPage);
     this.innerHTML = headerTemplate.innerHTML;
   }

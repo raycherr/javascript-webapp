@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bandlab Javascript Test</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="services/webAudioService.js"></script>
   <script src="components/header.js" type="text/javascript" defer></script>
   <script src="index.js" type="text/javascript" defer></script>
 
@@ -13,7 +14,7 @@
   <script src="services/postService.js" type="text/javascript" defer></script>
 </head>
 <body onload="onLoad()">
-  <header-component id="header" page="/posts"></header-component> <!-- Default to posts page -->
+  <header-component id="header"></header-component>
   <main id="main">
     <posts-list-component></posts-list-component>
   </main>
