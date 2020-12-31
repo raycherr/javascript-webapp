@@ -54,9 +54,6 @@ class Header extends HTMLElement {
 
   connectedCallback() {
     let currentPage = this.getAttribute('page');
-    if (!currentPage) {
-      currentPage = '/posts';
-    }
     renderHeaderTemplate(currentPage);
     this.innerHTML = headerTemplate.innerHTML;
   }
@@ -65,6 +62,9 @@ class Header extends HTMLElement {
 
   attributeChangedCallback(page, oldVal, newVal) {
     console.log('page changed', newVal);
+    if (newVal === '/') {
+      newVal = '/posts';
+    }
     renderHeaderTemplate(newVal);
     this.innerHTML = headerTemplate.innerHTML;
   }
