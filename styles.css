@@ -8,27 +8,24 @@ main {
 }
 
 button {
-  background: lightsalmon;
-  display: inline-block;
-  padding: 8px 20px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 4px grey;
-  cursor: pointer;
+  min-width: 64px;
+  padding: 2px 16px;
+  height: 36px;
   border: none;
-  font-size: 16px;
-  font-weight: bold;
+  border-radius: 5px;
+  background: #FEDBD0;
+  color: #442C2E;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-family: 'roboto', sans-serif;
+  box-shadow: 1px 1px 1px lightgrey;
 }
-
 button:hover {
-  box-shadow: 2px 2px 2px grey;
-  background: rgb(243, 138, 97);
+  cursor: pointer;
+  opacity: 0.9;
 }
-
 button:focus {
   outline: none;
-}
-
-button a {
-  text-decoration: none;
-  color: black;
+  border: 1px solid #442C2E;
 }
