@@ -8,7 +8,7 @@ function renderHeaderTemplate(currentPage) {
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: lightsalmon;
+        background-color: #FEDBD0;
         font-family: sans-serif;
       }
       
@@ -29,7 +29,7 @@ function renderHeaderTemplate(currentPage) {
 
       .selected {
         color: black;
-        box-shadow: inset 0 -2px 0 0 #cc592d;
+        box-shadow: inset 0 -2px 0 0 #442C2E;
       }
 
       .non-selected {
