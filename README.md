@@ -10,6 +10,12 @@ The UI also follows Google Material standards for a clean look.
 
 ## Getting Started
 
+Clone repository
+
+```
+git clone https://github.com/raycherr/javascript-webapp.git
+```
+
 Open index.html in a web browser
 
 
