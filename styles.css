@@ -1,5 +1,5 @@
 body {
-  font-family: 'sans-serif';
+  font-family: 'roboto', 'sans-serif';
   margin: 0;
 }
 
@@ -20,6 +20,7 @@ button {
   text-transform: uppercase;
   font-family: 'roboto', sans-serif;
   box-shadow: 1px 1px 1px lightgrey;
+  margin: 10px 10px 10px 0;
 }
 button:hover {
   cursor: pointer;
@@ -28,4 +29,15 @@ button:hover {
 button:focus {
   outline: none;
   border: 1px solid #442C2E;
+}
+button:disabled {
+  cursor: default;
+  background: lightgrey;
+  opacity: 1;
+  color: grey;
+}
+button.secondary {
+  background: transparent;
+  border: 1px solid #FEDBD0;
+  box-shadow: none;
 }

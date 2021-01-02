@@ -2,11 +2,46 @@ const postsListTemplate = document.createElement('template');
 
 function renderTemplate() {
   postsListTemplate.innerHTML = `
+    <style>
+      .post-card {
+        background: white;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 5px;
+        box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08), 0 1px 3px 1px rgba(66, 66, 66, 0.16);
+        margin: 20px 0;
+      }
+      .title {
+        font-weight: bold;
+        font-size: 21px;
+        padding-bottom: 10px;
+      }
+      .metadata {
+        color: #232F34;
+        font-size: 14px;
+      }
+      .body-text {
+        color: #232F34;
+        opacity: 0.9;
+      }
+      .header-section {
+        margin-top: 10px;
+        font-weight: bold;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        background: #FEDBD0;
+        color: #442C2E;
+        padding: 16px 8px;
+      }
+    </style>
     <div>
       <h2>Posts</h2>
       <button id="loadPostsButton">Load posts</button>
-      <button id="sortButton">Sort alphabetically</button>
-      <button id="groupButton">Group by userID</button>
+      <br>
+      <button class="secondary" id="sortButton">Sort alphabetically</button>
+      <button class="secondary" id="groupButton">Group by userID</button>
       <div id="postListContainer"></div>
     </div>
   `;
@@ -15,15 +50,16 @@ function renderTemplate() {
 class PostsList extends HTMLElement {
 
   jsonList;
+  isLoaded;
 
   constructor() {
     super();
     console.log('loaded posts list');
+    this.isLoaded = false;
   }
 
   connectedCallback() {
-    const currentPage = this.getAttribute('page');
-    renderTemplate(currentPage);
+    renderTemplate();
     this.innerHTML = postsListTemplate.innerHTML;
 
     const loadPostsButton = document.querySelector('#loadPostsButton');
@@ -31,9 +67,11 @@ class PostsList extends HTMLElement {
 
     const sortButton = document.querySelector('#sortButton');
     sortButton.addEventListener('click', () => this.sortAlphabetically());
+    this.checkDisabledButton('#sortButton');
 
     const groupButton = document.querySelector('#groupButton');
     groupButton.addEventListener('click', () => this.groupByUserId());
+    this.checkDisabledButton('#groupButton')
   }
 
   async triggerLoadPost() {
@@ -51,18 +89,30 @@ class PostsList extends HTMLElement {
     }
   }
 
+  checkDisabledButton(id) {
+    const checkingButton = document.querySelector(id);
+    if (!this.isLoaded) {
+      checkingButton.setAttribute('disabled', true); 
+    } else {
+      checkingButton.removeAttribute('disabled');
+    }
+  }
+
   buildPostDiv(post) {
-    // TODO style this like google material style
     const postDiv = document.createElement('div');
+    postDiv.setAttribute('class', 'post-card');
     postDiv.innerHTML = `
-      <h4>${post.userId}</h4>
-      <h4>${post.title}</h4>
-      <p>${post.body}</p>
+      <div class='metadata'>User Id: ${post.userId}</div>
+      <div class='title'>${post.title}</div>
+      <div class='body-text'>${post.body}</div>
     `;
     return postDiv;
   }
 
   buildPostsList(isSort = false) {
+    this.isLoaded = true;
+    this.checkDisabledButton('#sortButton');
+    this.checkDisabledButton('#groupButton');
     document.querySelector('#postListContainer').innerHTML = '';
     if (isSort) {
       this.jsonList.sort((a, b) => (a.title > b.title) ? 1 : -1);
@@ -77,6 +127,28 @@ class PostsList extends HTMLElement {
   }
 
   groupByUserId() {
+    const groupedList = this.jsonList.reduce((acc, value) => {
+      if (!acc[value.userId]) {
+        acc[value.userId] = [];
+      }
+      acc[value.userId].push(value);
+
+      return acc;
+    }, {});
+
+    document.querySelector('#postListContainer').innerHTML = '';
+    Object.entries(groupedList).forEach((userIdList) => {
+      const userIdHeader = document.createElement('div');
+      userIdHeader.setAttribute('class', 'header-section');
+      userIdHeader.innerHTML = `
+        <div>User Id: ${userIdList[0]}</div>
+      `;
+      document.querySelector('#postListContainer').appendChild(userIdHeader);
+
+      userIdList[1].forEach(post => {
+        document.querySelector('#postListContainer').appendChild(this.buildPostDiv(post));
+      });
+    });
 
   }
 }
