@@ -1,4 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html { /* fix for shifting left-right when scroll bar appears/disappears */
+  margin-right: calc(100% - 100vw);
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'roboto', 'sans-serif';
   margin: 0;
