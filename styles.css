@@ -54,3 +54,34 @@ button.secondary {
   box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08), 0 1px 3px 1px rgba(66, 66, 66, 0.16);
   margin: 20px 0;
 }
+
+.collapsible {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  cursor: pointer;
+  /* for header section in collapsible container */
+  margin-top: 10px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #FEDBD0;
+  color: #442C2E;
+  padding: 16px;
+}
+.collapsible:after {
+  content: '\002B'; /* Unicode character for "plus" sign (+) */
+  color: #442C2E;
+  float: right;
+  margin-left: 5px;
+}
+.active:after {
+  content: "\2212"; /* Unicode character for "minus" sign (-) */
+}
+.collapsible-content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}

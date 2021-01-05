@@ -16,16 +16,6 @@ function renderTemplate() {
         color: #232F34;
         opacity: 0.9;
       }
-      .header-section {
-        margin-top: 10px;
-        font-weight: bold;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        background: #FEDBD0;
-        color: #442C2E;
-        padding: 16px 8px;
-      }
     </style>
     <div>
       <h2>Posts</h2>
@@ -128,16 +118,26 @@ class PostsList extends HTMLElement {
     }, {});
 
     document.querySelector('#postListContainer').innerHTML = '';
-    Object.entries(groupedList).forEach((userIdList) => {
-      const userIdHeader = document.createElement('div');
-      userIdHeader.setAttribute('class', 'header-section');
-      userIdHeader.innerHTML = `
-        <div>User Id: ${userIdList[0]}</div>
+    Object.entries(groupedList).forEach((userIdList, index) => {
+      const groupedPostsContainer = document.createElement('div');
+      groupedPostsContainer.innerHTML = `
+        <div class='collapsible'>User Id: ${userIdList[0]}</div>
+        <div class='collapsible-content'></div>
       `;
-      document.querySelector('#postListContainer').appendChild(userIdHeader);
+      document.querySelector('#postListContainer').appendChild(groupedPostsContainer);
+      document.getElementsByClassName('collapsible')[index].addEventListener('click', (event) => {
+        event.target.classList.toggle('active');
+        var content = event.target.nextElementSibling;
+        if (content.style.display === "block") {
+          content.style.display = "none";
+        } else {
+          content.style.display = "block";
+        }
+      });
 
       userIdList[1].forEach(post => {
-        document.querySelector('#postListContainer').appendChild(this.buildPostDiv(post));
+        const groupedList = document.getElementsByClassName('collapsible-content')[index];
+        groupedList.appendChild(this.buildPostDiv(post));
       });
     });
 
