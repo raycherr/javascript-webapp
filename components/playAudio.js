@@ -2,6 +2,12 @@ const playAudioTemplate = document.createElement('template');
 
 function renderPlayAudioTemplate() {
   playAudioTemplate.innerHTML = `
+    <style>
+      .card {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    </style>
     <h2>Audio</h2>
     <div id="audioListContainer"></div>
   `;
@@ -35,6 +41,7 @@ class PlayAudio extends HTMLElement {
 
   buildAudioDiv(clip) {
     const audioDiv = document.createElement('div');
+    audioDiv.setAttribute('class', 'card');
     audioDiv.innerHTML = `
       <h4>${clip.name}</h4>
       <button id="${clip.name.replace(/\s+/g, '')}"

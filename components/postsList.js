@@ -3,15 +3,6 @@ const postsListTemplate = document.createElement('template');
 function renderTemplate() {
   postsListTemplate.innerHTML = `
     <style>
-      .post-card {
-        background: white;
-        padding: 16px;
-        display: flex;
-        flex-direction: column;
-        border-radius: 5px;
-        box-shadow: 0 1px 1px 0 rgba(66, 66, 66, 0.08), 0 1px 3px 1px rgba(66, 66, 66, 0.16);
-        margin: 20px 0;
-      }
       .title {
         font-weight: bold;
         font-size: 21px;
@@ -100,7 +91,7 @@ class PostsList extends HTMLElement {
 
   buildPostDiv(post) {
     const postDiv = document.createElement('div');
-    postDiv.setAttribute('class', 'post-card');
+    postDiv.setAttribute('class', 'card');
     postDiv.innerHTML = `
       <div class='metadata'>User Id: ${post.userId}</div>
       <div class='title'>${post.title}</div>
