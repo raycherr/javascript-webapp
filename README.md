@@ -29,3 +29,4 @@ git clone https://github.com/raycherr/javascript-webapp.git
 * UI indicator for sort/group
 * Add Store to keep loaded content even when switching pages
 * Audio player UI e.g. pause button
+* Add testing
